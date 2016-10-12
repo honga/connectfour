@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">ConnectFour</string>
+    <string name="start_game">Start Game</string>
+    <string name="name">Name: </string>
+    <string name="uid">UID: </string>
+    <string name="author">Name: Yuen Hong NG</string>
+    <string name="author_id">UID: 3035238008</string>
 </resources>
