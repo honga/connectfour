@@ -5,4 +5,11 @@
     <string name="uid">UID: </string>
     <string name="author">Name: Yuen Hong NG</string>
     <string name="author_id">UID: 3035238008</string>
+
+    <string name="title_activity_game">GameActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="new_game">New Game</string>
+    <string name="retract">Retract</string>
+    <string name="turn">Turn</string>
 </resources>
