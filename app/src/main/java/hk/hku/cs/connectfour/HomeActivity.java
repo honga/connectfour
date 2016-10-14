@@ -1,5 +1,6 @@
 package hk.hku.cs.connectfour;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -26,6 +27,9 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
             System.out.println("################\n" +
                                 "Hey Ho let's go!\n" +
                                 "################");
+
+            Intent intent = new Intent(getBaseContext(), GameActivity.class);
+            startActivity(intent);
         }
     }
 }

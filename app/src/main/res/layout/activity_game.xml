@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/dracula">
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/new_game"
+        android:id="@+id/new_game"
+        android:layout_alignParentStart="true"
+        android:textAllCaps="false"
+        android:background="@color/accent"
+        android:layout_alignParentTop="true"
+        android:clickable="true" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/retract"
+        android:id="@+id/retract"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:textAllCaps="false"
+        android:background="@color/accent"
+        android:clickable="true" />
+
+    <GridLayout
+        android:id="@+id/board"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="80dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/new_game"
+        android:rowCount="6"
+        android:columnCount="7"
+        android:background="@color/board"
+        android:orientation="vertical">
+
+            <!--<Button-->
+                <!--android:id="@+id/col0"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:layout_width="50dp" />-->
+
+    </GridLayout>
+
+</RelativeLayout>
