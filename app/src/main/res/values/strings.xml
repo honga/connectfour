@@ -11,5 +11,7 @@
     <string name="dummy_content">DUMMY\nCONTENT</string>
     <string name="new_game">New Game</string>
     <string name="retract">Retract</string>
-    <string name="turn">Turn</string>
+    <string name="turn">Turn :</string>
+    <string name="red">Red</string>
+    <string name="green">Green</string>
 </resources>
