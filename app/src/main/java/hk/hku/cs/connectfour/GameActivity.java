@@ -1,15 +1,22 @@
 package hk.hku.cs.connectfour;
 
 import android.content.Intent;
+import android.media.Image;
+import android.provider.ContactsContract;
 import android.provider.Settings;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.GridLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.SimpleAdapter;
 import android.widget.TableLayout;
+import android.widget.TableRow;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class GameActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -18,12 +25,9 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     Button new_game;
     Button retract;
     TableLayout board;
-    ImageView c00,c01,c02,c03,c04,c05,c06,
-              c10,c11,c12,c13,c14,c15,c16,
-              c20,c21,c22,c23,c24,c25,c26,
-              c30,c31,c32,c33,c34,c35,c36,
-              c40,c41,c42,c43,c44,c45,c46,
-              c50,c51,c52,c53,c54,c55,c56;
+    String TURN = "RED";
+    String[][] gameState = new String[6][7];
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,22 +37,24 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         new_game = (Button)findViewById(R.id.new_game);
         retract = (Button)findViewById(R.id.retract);
         board = (TableLayout) findViewById(R.id.board);
-        c51 = (ImageView) findViewById(R.id.c51);
         board.setShrinkAllColumns(true);
-        int childCount = board.getChildCount();
+        LinearLayout l;
+        TableRow r;
 
+        //set OnClickListener for the entire board
+        for (int i=0;i<board.getChildCount();i++){
+            l = (LinearLayout) board.getChildAt(i);
+            for (int j=0;j<l.getChildCount();j++){
+                r = (TableRow) l.getChildAt(j);
+                for (int k=0;k<r.getChildCount();k++){
+                    r.getChildAt(k).setOnClickListener(this);
+                }
+            }
+        }
 
         new_game.setOnClickListener(this);
         retract.setOnClickListener(this);
-        c51.setOnClickListener(this);
-
-
-
-
         Intent intent = this.getIntent();
-        //int[][] board = new int[6][7];
-
-
     }
 
     public void onClick(View v){
@@ -57,9 +63,6 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             System.out.println("################\n" +
                                 "AGAIN AGAIN!\n" +
                                 "################");
-            c51 = (ImageView) findViewById(R.id.c51);
-            c51.setImageResource(R.drawable.green_t);
-
         }
 
         if (v.getId() == R.id.retract){
@@ -67,12 +70,32 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             System.out.println("$$$$$$$$$$$$\n" +
                                 "GG NO RE\n" +
                                 "$$$$$$$$$$$$\n");
-            c51 = (ImageView) findViewById(R.id.c51);
-            c51.setImageResource(R.drawable.red_t);
         }
-        if (v.getId() == R.id.c51){
-            c51 = (ImageView) findViewById(R.id.c51);
-            c51.setImageResource(R.drawable.red_wint);
+
+        if (v instanceof ImageView){
+            String playerMove = v.getResources().getResourceName(v.getId());
+            int col = Character.getNumericValue(playerMove.charAt(playerMove.length()-1));
+            int row = Character.getNumericValue(playerMove.charAt(playerMove.length()-2));
+            if (TURN == "RED"){
+                ImageView redMove;
+                System.out.println("ZOMG!\n");
+                System.out.println("what row did we press!?  " + row);
+                System.out.println("what col did we press!?  " + col);
+                System.out.println("WHOSE TURN: " + TURN);
+                System.out.println("####################\n\n");
+                System.out.println(Arrays.deepToString(gameState));
+                System.out.println("####################\n\n");
+                // TODO make new method
+                redMove = (ImageView) findViewById(v.getId());
+                redMove.setImageResource(R.drawable.red_t);
+                TURN = "GREEN";
+            } else if (TURN == "GREEN"){
+                ImageView greenMove;
+                greenMove = (ImageView) findViewById(v.getId());
+                greenMove.setImageResource(R.drawable.green_t);
+                System.out.println("WHOSE TURN: " + TURN);
+                TURN = "RED";
+            }
         }
     }
 }
