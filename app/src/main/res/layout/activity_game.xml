@@ -54,7 +54,7 @@
             <TableRow
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/tableRow5" >
+                android:id="@+id/r5" >
 
                 <ImageView
                     android:layout_width="0dp"
@@ -106,6 +106,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:id="@+id/c55"
+                    android:tag="5"
                     android:src="@drawable/empty_t"
                     android:layout_weight="1"
                     android:clickable="true"/>
@@ -114,6 +115,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:id="@+id/c56"
+                    android:tag="6"
                     android:src="@drawable/empty_t"
                     android:layout_weight="1"
                     android:clickable="true"/>
@@ -129,14 +131,14 @@
             <TableRow
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/tableRow4" >
+                android:id="@+id/r4" >
 
                 <ImageView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:id="@+id/c40"
+                    android:tag="0"
                     android:src="@drawable/empty_t"
-                    android:contentDescription="chess"
                     android:layout_weight="1"
                     android:clickable="true"/>
 
@@ -144,6 +146,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:id="@+id/c41"
+                    android:tag="1"
                     android:src="@drawable/empty_t"
                     android:layout_weight="1"
                     android:clickable="true"/>
@@ -152,6 +155,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:id="@+id/c42"
+                    android:tag="2"
                     android:src="@drawable/empty_t"
                     android:layout_weight="1"
                     android:clickable="true"/>
@@ -160,6 +164,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:id="@+id/c43"
+                    android:tag="3"
                     android:src="@drawable/empty_t"
                     android:layout_weight="1"
                     android:clickable="true"/>
@@ -168,6 +173,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:id="@+id/c44"
+                    android:tag="4"
                     android:src="@drawable/empty_t"
                     android:layout_weight="1"
                     android:clickable="true"/>
@@ -176,6 +182,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:id="@+id/c45"
+                    android:tag="5"
                     android:src="@drawable/empty_t"
                     android:layout_weight="1"
                     android:clickable="true"/>
@@ -184,6 +191,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:id="@+id/c46"
+                    android:tag="6"
                     android:src="@drawable/empty_t"
                     android:layout_weight="1"
                     android:clickable="true"/>
@@ -199,14 +207,14 @@
             <TableRow
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/tableRow3" >
+                android:id="@+id/r3" >
 
                 <ImageView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:id="@+id/c30"
+                    android:tag="0"
                     android:src="@drawable/empty_t"
-                    android:contentDescription="chess"
                     android:layout_weight="1"
                     android:clickable="true"/>
 
@@ -214,6 +222,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:id="@+id/c31"
+                    android:tag="1"
                     android:src="@drawable/empty_t"
                     android:layout_weight="1"
                     android:clickable="true"/>
@@ -222,6 +231,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:id="@+id/c32"
+                    android:tag="2"
                     android:src="@drawable/empty_t"
                     android:layout_weight="1"
                     android:clickable="true"/>
@@ -230,6 +240,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:id="@+id/c33"
+                    android:tag="3"
                     android:src="@drawable/empty_t"
                     android:layout_weight="1"
                     android:clickable="true"/>
@@ -238,6 +249,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:id="@+id/c34"
+                    android:tag="4"
                     android:src="@drawable/empty_t"
                     android:layout_weight="1"
                     android:clickable="true"/>
@@ -246,6 +258,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:id="@+id/c35"
+                    android:tag="5"
                     android:src="@drawable/empty_t"
                     android:layout_weight="1"
                     android:clickable="true"/>
@@ -254,6 +267,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:id="@+id/c36"
+                    android:tag="6"
                     android:src="@drawable/empty_t"
                     android:layout_weight="1"
                     android:clickable="true"/>
@@ -269,14 +283,14 @@
             <TableRow
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/tableRow2" >
+                android:id="@+id/r2" >
 
                 <ImageView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:id="@+id/c20"
+                    android:tag="0"
                     android:src="@drawable/empty_t"
-                    android:contentDescription="chess"
                     android:layout_weight="1"
                     android:clickable="true"/>
 
@@ -284,6 +298,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:id="@+id/c21"
+                    android:tag="1"
                     android:src="@drawable/empty_t"
                     android:layout_weight="1"
                     android:clickable="true"/>
@@ -292,6 +307,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:id="@+id/c22"
+                    android:tag="2"
                     android:src="@drawable/empty_t"
                     android:layout_weight="1"
                     android:clickable="true"/>
@@ -300,6 +316,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:id="@+id/c23"
+                    android:tag="3"
                     android:src="@drawable/empty_t"
                     android:layout_weight="1"
                     android:clickable="true"/>
@@ -308,6 +325,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:id="@+id/c24"
+                    android:tag="4"
                     android:src="@drawable/empty_t"
                     android:layout_weight="1"
                     android:clickable="true"/>
@@ -316,6 +334,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:id="@+id/c25"
+                    android:tag="5"
                     android:src="@drawable/empty_t"
                     android:layout_weight="1"
                     android:clickable="true"/>
@@ -324,6 +343,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:id="@+id/c26"
+                    android:tag="6"
                     android:src="@drawable/empty_t"
                     android:layout_weight="1"
                     android:clickable="true"/>
@@ -339,14 +359,14 @@
             <TableRow
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/tableRow" >
+                android:id="@+id/r1" >
 
                 <ImageView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:id="@+id/c10"
+                    android:tag="0"
                     android:src="@drawable/empty_t"
-                    android:contentDescription="chess"
                     android:layout_weight="1"
                     android:clickable="true"/>
 
@@ -354,6 +374,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:id="@+id/c11"
+                    android:tag="1"
                     android:src="@drawable/empty_t"
                     android:layout_weight="1"
                     android:clickable="true"/>
@@ -362,6 +383,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:id="@+id/c12"
+                    android:tag="2"
                     android:src="@drawable/empty_t"
                     android:layout_weight="1"
                     android:clickable="true"/>
@@ -370,6 +392,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:id="@+id/c13"
+                    android:tag="3"
                     android:src="@drawable/empty_t"
                     android:layout_weight="1"
                     android:clickable="true"/>
@@ -378,6 +401,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:id="@+id/c14"
+                    android:tag="4"
                     android:src="@drawable/empty_t"
                     android:layout_weight="1"
                     android:clickable="true"/>
@@ -386,6 +410,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:id="@+id/c15"
+                    android:tag="5"
                     android:src="@drawable/empty_t"
                     android:layout_weight="1"
                     android:clickable="true"/>
@@ -394,6 +419,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:id="@+id/c16"
+                    android:tag="6"
                     android:src="@drawable/empty_t"
                     android:layout_weight="1"
                     android:clickable="true"/>
@@ -418,7 +444,6 @@
                     android:id="@+id/c00"
                     android:tag="0"
                     android:src="@drawable/empty_t"
-                    android:contentDescription="chess"
                     android:layout_weight="1"
                     android:clickable="true"/>
 
