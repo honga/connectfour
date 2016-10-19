@@ -20,12 +20,11 @@ import java.util.Arrays;
 
 public class GameActivity extends AppCompatActivity implements View.OnClickListener {
 
-    int COL = 7;
-    int ROW = 6;
     Button new_game;
     Button retract;
     TableLayout board;
     String TURN = "RED";
+    ImageView colorTurn;
     String[][] gameState = new String[6][7];
     int[][] drawBoard = new int[6][7];
     ArrayList<int[]> historical = new ArrayList<int[]>();
@@ -89,6 +88,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 redMove = (ImageView) findViewById(v.getId());
                 redMove.setImageResource(R.drawable.red_t);
                 TURN = "GREEN";
+                checkTurnColor();
             } else if (TURN == "GREEN"){
                 ImageView greenMove;
                 gameState[row][col] = "g";
@@ -96,10 +96,12 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 greenMove.setImageResource(R.drawable.green_t);
                 System.out.println("WHOSE TURN: " + TURN);
                 TURN = "RED";
+                checkTurnColor();
             }
         }
         if (v.getId() == R.id.retract && historical.size() > 0){
             retractMove(gameState, historical);
+            checkTurnColor();
             drawBoard(gameState);
             System.out.println("game state after retract is: " + Arrays.deepToString(gameState));
             System.out.println("drawBoard after retract is: " + Arrays.deepToString(drawBoard));
@@ -132,5 +134,17 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         //retract move
         int[] move = historical.remove(historical.size() - 1);
         gameState[move[0]][move[1]] = null;
+        if (TURN == "RED")
+            TURN = "GREEN";
+        else TURN = "RED";
+    }
+
+    public void checkTurnColor(){
+        colorTurn = (ImageView) findViewById(R.id.turn);
+        if (TURN == "RED"){
+            colorTurn.setImageResource(R.drawable.red_t);
+        }
+        else colorTurn.setImageResource(R.drawable.green_t);
+
     }
 }
