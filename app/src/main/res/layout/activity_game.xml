@@ -31,11 +31,12 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_marginTop="10dp"
-        android:layout_marginBottom="110dp"
+        android:layout_marginBottom="10dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/new_game"
+        android:layout_above="@+id/turntable"
         android:rowCount="6"
         android:columnCount="7"
         android:background="@color/board"
@@ -505,22 +506,52 @@
 
     </TableLayout>
 
-    <TextView
+    <TableLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/turn"
-        android:id="@+id/turn"
-        android:textAllCaps="false"
+        android:layout_height="40dp"
+        android:id="@+id/turntable"
         android:background="@color/accent"
-        android:clickable="true"
         android:layout_above="@+id/retract"
         android:layout_alignParentStart="true"
         android:textSize="20dp"
         android:textAlignment="center"
         android:paddingTop="10dp"
-        android:paddingBottom="10dp"
-        android:layout_marginBottom="10dp"
-        android:elegantTextHeight="false" />
+        android:paddingBottom="5dp"
+        android:layout_marginBottom="5dp"
+        android:layout_alignParentEnd="false"
+        android:layout_toEndOf="@id/board"
+        android:orientation="vertical">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:baselineAligned="false">
+
+            <TextView
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="TURN : &#032;"
+                android:id="@+id/textView"
+                android:layout_column="1"
+                android:textAlignment="gravity"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:gravity="center_vertical|right"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/turn"
+                android:layout_weight="1"
+                android:src="@drawable/red_t"
+                android:layout_gravity="center_vertical"
+                android:layout_span="4"
+                android:scaleType="fitStart" />
+
+        </TableRow>
+    </TableLayout>
 
 
 </RelativeLayout>
