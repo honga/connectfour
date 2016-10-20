@@ -14,6 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.SimpleAdapter;
 import android.widget.TableLayout;
 import android.widget.TableRow;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -26,6 +27,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     String TURN = "RED";
     String gameStatus = "GO";
     ImageView colorTurn;
+    TextView turnText;
     String[][] gameState = new String[6][7];
     int[][] drawBoard = new int[6][7];
     ArrayList<int[]> historical = new ArrayList<int[]>();
@@ -64,42 +66,50 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         if (v.getId() == R.id.new_game){
             gameState = new String[6][7];
             historical = new ArrayList<int[]>();
+            turnText = (TextView) findViewById(R.id.turnText);
+            gameStatus = "GO";
             draw(gameState);
+            turnText.setText(R.string.turn);
             TURN = "RED";
             checkTurnColor();
         }
-        if (v instanceof ImageView && gameStatus != "END"){
-            String playerMove = v.getResources().getResourceName(v.getId());
-            int col = Character.getNumericValue(playerMove.charAt(playerMove.length()-1));
-            int row = Character.getNumericValue(playerMove.charAt(playerMove.length()-2));
-            int[] newMove = new int[2];
-            newMove[0] = row;
-            newMove[1] = col;
-            //historical.add(newMove);
+        if (gameStatus == "GO"){
 
-            if (TURN == "RED"){
-                System.out.println("what row did we press!?  " + row);
-                System.out.println("what col did we press!?  " + col);
-                if (checkLegalMove(newMove,historical,TURN)){
-                    draw(gameState);
-                    TURN = "GREEN";
-                    checkTurnColor();
+            if (v instanceof ImageView){
+                String playerMove = v.getResources().getResourceName(v.getId());
+                int col = Character.getNumericValue(playerMove.charAt(playerMove.length()-1));
+                int row = Character.getNumericValue(playerMove.charAt(playerMove.length()-2));
+                int[] newMove = new int[2];
+                newMove[0] = row;
+                newMove[1] = col;
+
+                if (TURN == "RED"){
+                    System.out.println("what row did we press!?  " + row);
+                    System.out.println("what col did we press!?  " + col);
+                    if (checkLegalMove(newMove,historical,TURN)){
+                        checkWin(gameState,drawBoard, historical);
+                        draw(gameState);
+                        TURN = "GREEN";
+                        checkTurnColor();
+                    }
+                    System.out.println(Arrays.deepToString(gameState));
+                } else if (TURN == "GREEN"){
+                    if (checkLegalMove(newMove,historical,TURN)){
+                        checkWin(gameState,drawBoard, historical);
+                        draw(gameState);
+                        TURN = "RED";
+                        checkTurnColor();
+                    }
+                    System.out.println("WHOSE TURN: " + TURN);
                 }
-                System.out.println(Arrays.deepToString(gameState));
-            } else if (TURN == "GREEN"){
-                if (checkLegalMove(newMove,historical,TURN)){
-                    draw(gameState);
-                    TURN = "RED";
-                    checkTurnColor();
-                }
-                System.out.println("WHOSE TURN: " + TURN);
+
             }
-
-        }
-        if (v.getId() == R.id.retract && historical.size() > 0){
-            retractMove(gameState, historical);
-            checkTurnColor();
-            draw(gameState);
+            if (v.getId() == R.id.retract && historical.size() > 0){
+                retractMove(gameState, historical);
+                checkTurnColor();
+                draw(gameState);
+                gameStatus = "GO";
+            }
         }
     }
 
@@ -114,21 +124,49 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 } else if (gameState[j][k] == "g"){
                     setMove = (ImageView) findViewById(drawBoard[j][k]);
                     setMove.setImageResource(R.drawable.green_t);
-
+                } else if (gameState[j][k] == "rw"){
+                    setMove = (ImageView) findViewById(drawBoard[j][k]);
+                    setMove.setImageResource(R.drawable.red_wint);
+                } else if (gameState[j][k] == "gw"){
+                    setMove = (ImageView) findViewById(drawBoard[j][k]);
+                    setMove.setImageResource(R.drawable.green_wint);
+                } else if (gameState[j][k] == "w" && TURN == "RED") {
+                    setMove = (ImageView) findViewById(drawBoard[j][k]);
+                    setMove.setImageResource(R.drawable.red_wint);
+                } else if (gameState[j][k] == "w" && TURN == "GREEN"){
+                    setMove = (ImageView) findViewById(drawBoard[j][k]);
+                    setMove.setImageResource(R.drawable.green_wint);
                 }
             }
         }
     }
 
-    public String checkWin(String [][] gameState, int[][] drawBoard){
+    public String checkWin(String [][] gameState, int[][] drawBoard, ArrayList<int[]> historical){
         // if win change the image of winning pieces
-        for (int i=0; i<gameState.length ;i++){
-            for (int j=0; j<gameState[i].length; j++){
+        if (historical.size() > 0) {
+            gameStatus = "GO";
+            int[] move = historical.get(historical.size() - 1);
+            int row = move[0];
+            int col = move[1];
+            String player = gameState[move[0]][move[1]];
+            System.out.println("CHECKING FOR WIN : " + player);
+
+            if (row>2 && gameState[row-1][col]==player && gameState[row-2][col]==player && gameState[row-3][col]==player){
+                gameState[row][col] = "w";
+                gameState[row-1][col] = "w";
+                gameState[row-2][col] = "w";
+                gameState[row-3][col] = "w";
+                gameStatus = "END";
 
             }
-        }
+            for (int i = 0; i < gameState.length; i++) {
+                for (int j = 0; j < gameState[i].length; j++) {
 
-        return gameStatus = "END";
+
+                }
+            }
+        }
+        return gameStatus;
     }
 
     public void retractMove(String[][] gameState, ArrayList<int[]> historical){
@@ -142,10 +180,22 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
     public void checkTurnColor(){
         colorTurn = (ImageView) findViewById(R.id.turn);
-        if (TURN == "RED"){
+        turnText = (TextView) findViewById(R.id.turnText);
+        if (gameStatus == "END"){
+            turnText.setText(R.string.winner);
+            if (TURN == "RED"){
+                colorTurn.setImageResource(R.drawable.green_t);
+            }
+            if (TURN == "GREEN"){
+                colorTurn.setImageResource(R.drawable.red_t);
+            }
+        }
+        else if (TURN == "RED" && gameStatus == "GO"){
             colorTurn.setImageResource(R.drawable.red_t);
         }
-        else colorTurn.setImageResource(R.drawable.green_t);
+        else if (TURN == "GREEN" && gameStatus == "GO"){
+            colorTurn.setImageResource(R.drawable.green_t);
+        }
 
     }
 
@@ -169,7 +219,6 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                         return true;
                     }
                     break;
-
                 }
             }
         }
