@@ -29,8 +29,10 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     ImageView colorTurn;
     TextView turnText;
     String[][] gameState = new String[6][7];
+    String[][] copyGameState = new String[6][7];
     int[][] drawBoard = new int[6][7];
     ArrayList<int[]> historical = new ArrayList<int[]>();
+    ArrayList<int[]> winners = new ArrayList<>();
 
 
     @Override
@@ -65,6 +67,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v){
         if (v.getId() == R.id.new_game){
             gameState = new String[6][7];
+            copyGameState = new String[6][7];
             historical = new ArrayList<int[]>();
             turnText = (TextView) findViewById(R.id.turnText);
             gameStatus = "GO";
@@ -141,38 +144,13 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    public String checkWin(String [][] gameState, int[][] drawBoard, ArrayList<int[]> historical){
-        // if win change the image of winning pieces
-        if (historical.size() > 0) {
-            gameStatus = "GO";
-            int[] move = historical.get(historical.size() - 1);
-            int row = move[0];
-            int col = move[1];
-            String player = gameState[move[0]][move[1]];
-            System.out.println("CHECKING FOR WIN : " + player);
 
-            if (row>2 && gameState[row-1][col]==player && gameState[row-2][col]==player && gameState[row-3][col]==player){
-                gameState[row][col] = "w";
-                gameState[row-1][col] = "w";
-                gameState[row-2][col] = "w";
-                gameState[row-3][col] = "w";
-                gameStatus = "END";
-
-            }
-            for (int i = 0; i < gameState.length; i++) {
-                for (int j = 0; j < gameState[i].length; j++) {
-
-
-                }
-            }
-        }
-        return gameStatus;
-    }
 
     public void retractMove(String[][] gameState, ArrayList<int[]> historical){
         //retract move
         int[] move = historical.remove(historical.size() - 1);
         gameState[move[0]][move[1]] = null;
+        copyGameState[move[0]][move[1]] = null;
         if (TURN == "RED")
             TURN = "GREEN";
         else TURN = "RED";
@@ -208,12 +186,14 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 if (gameState[i][col] == null){
                     if (TURN == "RED"){
                         gameState[i][col] = "r";
+                        copyGameState[i][col] = "r";
                         newMove[0] = i;
                         historical.add(newMove);
                         return true;
                     }
                     else if (TURN == "GREEN"){
                         gameState[i][col] = "g";
+                        copyGameState[i][col] = "g";
                         newMove[0] = i;
                         historical.add(newMove);
                         return true;
@@ -224,4 +204,170 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         }
         return false;
     }
+
+    public String checkWin(String [][] gameState, int[][] drawBoard, ArrayList<int[]> historical){
+        // if win change the image of winning pieces
+        if (historical.size() > 0) {
+            gameStatus = "GO";
+            int[] move = historical.get(historical.size() - 1);
+            int row = move[0];
+            int col = move[1];
+            String lastColor = copyGameState[row][col];
+            System.out.println("CHECKING FOR WIN : " + lastColor);
+            //vertical
+            if (row>2 && copyGameState[row-1][col]==lastColor &&
+                    copyGameState[row-2][col]==lastColor && copyGameState[row-3][col]==lastColor){
+                gameState[row][col] = "w";
+                gameState[row-1][col] = "w";
+                gameState[row-2][col] = "w";
+                gameState[row-3][col] = "w";
+                gameStatus = "END";
+
+            }
+            //horizontal xoxx
+            System.out.println("lastColor = " +lastColor);
+            System.out.println(Arrays.deepToString(gameState));
+            System.out.println("copy: " + Arrays.deepToString(copyGameState));
+            if (col>0 && col<5 && copyGameState[row][col+1]== lastColor &&
+                    copyGameState[row][col+2] == lastColor && copyGameState[row][col-1] == lastColor){
+                gameState[row][col] = "w";
+                gameState[row][col+1] = "w";
+                gameState[row][col+2] = "w";
+                gameState[row][col-1] = "w";
+                gameStatus = "END";
+
+            }
+            //horizontal xxox
+            System.out.println("lastColor = " +lastColor);
+            System.out.println(Arrays.deepToString(gameState));
+            System.out.println("copy: " + Arrays.deepToString(copyGameState));
+            if (col<6 && col>1 && copyGameState[row][col-1]== lastColor &&
+                    copyGameState[row][col-2] == lastColor && copyGameState[row][col+1] == lastColor){
+                gameState[row][col] = "w";
+                gameState[row][col-1] = "w";
+                gameState[row][col-2] = "w";
+                gameState[row][col+1] = "w";
+                gameStatus = "END";
+            }
+            // horizontal oxxx
+            System.out.println("lastColor = " +lastColor);
+            System.out.println(Arrays.deepToString(gameState));
+            System.out.println("copy: " + Arrays.deepToString(copyGameState));
+            if (col<4 && copyGameState[row][col+1]== lastColor &&
+                    copyGameState[row][col+2] == lastColor && copyGameState[row][col+3] == lastColor){
+                gameState[row][col] = "w";
+                gameState[row][col+1] = "w";
+                gameState[row][col+2] = "w";
+                gameState[row][col+3] = "w";
+                gameStatus = "END";
+            }
+            // horizontal xxxo
+            System.out.println("lastColor = " +lastColor);
+            System.out.println(Arrays.deepToString(gameState));
+            System.out.println("copy: " + Arrays.deepToString(copyGameState));
+            if (col>2 && copyGameState[row][col-1]== lastColor &&
+                    copyGameState[row][col-2] == lastColor && copyGameState[row][col-3] == lastColor){
+                gameState[row][col] = "w";
+                gameState[row][col-1] = "w";
+                gameState[row][col-2] = "w";
+                gameState[row][col-3] = "w";
+                gameStatus = "END";
+
+            }
+            //diagonal right xoxx
+            if (row<4 && row>0 && col>0 && col<5 &&
+                    copyGameState[row+1][col+1]== lastColor &&
+                    copyGameState[row+2][col+2] == lastColor &&
+                    copyGameState[row-1][col-1] == lastColor){
+                gameState[row][col] = "w";
+                gameState[row+2][col+2] = "w";
+                gameState[row+1][col+1] = "w";
+                gameState[row-1][col-1] = "w";
+                gameStatus = "END";
+
+            }
+            // diagonal right xxox
+            if (row<5 && row>1 && col>1 && col<6 &&
+                    copyGameState[row+1][col+1]== lastColor &&
+                    copyGameState[row-1][col-1] == lastColor &&
+                    copyGameState[row-2][col-2] == lastColor){
+                gameState[row][col] = "w";
+                gameState[row+1][col+1] = "w";
+                gameState[row-1][col-1] = "w";
+                gameState[row-2][col-2] = "w";
+                gameStatus = "END";
+
+            }
+            //diagonal right oxxx
+            if (row<3 && col<4 &&
+                    copyGameState[row+1][col+1]== lastColor &&
+                    copyGameState[row+2][col+2] == lastColor &&
+                    copyGameState[row+3][col+3] == lastColor){
+                gameState[row][col] = "w";
+                gameState[row+1][col+1] = "w";
+                gameState[row+2][col+2] = "w";
+                gameState[row+3][col+3] = "w";
+                gameStatus = "END";
+            }
+            // diagonal right xxxo
+            if (row>2 && col>2 &&
+                    copyGameState[row-1][col-1]== lastColor &&
+                    copyGameState[row-2][col-2] == lastColor &&
+                    copyGameState[row-3][col-3] == lastColor){
+                gameState[row][col] = "w";
+                gameState[row-1][col-1] = "w";
+                gameState[row-2][col-2] = "w";
+                gameState[row-3][col-3] = "w";
+                gameStatus = "END";
+            }
+            //diagonal left xxox
+            if (row<4 && row>0 && col>1 && col<5 &&
+                    copyGameState[row+1][col-1]== lastColor &&
+                    copyGameState[row+2][col-2] == lastColor &&
+                    copyGameState[row-1][col+1] == lastColor){
+                gameState[row][col] = "w";
+                gameState[row+1][col-1] = "w";
+                gameState[row+2][col-2] = "w";
+                gameState[row-1][col+1] = "w";
+                gameStatus = "END";
+            }
+            //diagonal left xoxx
+            if (row<5 && row>1 && col>0 && col<5 &&
+                    copyGameState[row+1][col-1]== lastColor &&
+                    copyGameState[row-1][col+1] == lastColor &&
+                    copyGameState[row-2][col+2] == lastColor){
+                gameState[row][col] = "w";
+                gameState[row+1][col-1] = "w";
+                gameState[row-2][col+2] = "w";
+                gameState[row-1][col+1] = "w";
+                gameStatus = "END";
+            }
+            // diagonal left oxxx
+            if (row>2 && col<4 &&
+                    copyGameState[row-1][col+1]== lastColor &&
+                    copyGameState[row-2][col+2] == lastColor &&
+                    copyGameState[row-3][col+3] == lastColor){
+                gameState[row][col] = "w";
+                gameState[row-1][col+1] = "w";
+                gameState[row-2][col+2] = "w";
+                gameState[row-3][col+3] = "w";
+                gameStatus = "END";
+            }
+            // diagonal left xxxo
+            if (row<3 && col>2 &&
+                    copyGameState[row+1][col-1]== lastColor &&
+                    copyGameState[row+2][col-2] == lastColor &&
+                    copyGameState[row+3][col-3] == lastColor){
+                gameState[row][col] = "w";
+                gameState[row+1][col-1] = "w";
+                gameState[row+2][col-2] = "w";
+                gameState[row+3][col-3] = "w";
+                gameStatus = "END";
+            }
+
+
+        }
+        return gameStatus;
+    }
+
 }
