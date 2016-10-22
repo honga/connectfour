@@ -174,6 +174,10 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         else if (TURN == "GREEN" && gameStatus == "GO"){
             colorTurn.setImageResource(R.drawable.green_t);
         }
+        else if (gameStatus == "DRAW"){
+            turnText.setText(R.string.draw);
+            colorTurn.setImageDrawable(null);
+        }
 
     }
 
@@ -214,6 +218,9 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             int col = move[1];
             String lastColor = copyGameState[row][col];
             System.out.println("CHECKING FOR WIN : " + lastColor);
+            if (historical.size() == 42){
+                gameStatus = "DRAW";
+            }
             //vertical
             if (row>2 && copyGameState[row-1][col]==lastColor &&
                     copyGameState[row-2][col]==lastColor && copyGameState[row-3][col]==lastColor){
