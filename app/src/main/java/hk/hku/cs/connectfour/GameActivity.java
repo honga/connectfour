@@ -1,17 +1,12 @@
 package hk.hku.cs.connectfour;
 
 import android.content.Intent;
-import android.media.Image;
-import android.provider.ContactsContract;
-import android.provider.Settings;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.SimpleAdapter;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -32,7 +27,6 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     String[][] copyGameState = new String[6][7];
     int[][] drawBoard = new int[6][7];
     ArrayList<int[]> historical = new ArrayList<int[]>();
-    ArrayList<int[]> winners = new ArrayList<>();
 
 
     @Override
@@ -65,6 +59,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void onClick(View v){
+        // restarts the game, cleans moves history
         if (v.getId() == R.id.new_game){
             gameState = new String[6][7];
             copyGameState = new String[6][7];
@@ -77,7 +72,6 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             checkTurnColor();
         }
         if (gameStatus == "GO"){
-
             if (v instanceof ImageView){
                 String playerMove = v.getResources().getResourceName(v.getId());
                 int col = Character.getNumericValue(playerMove.charAt(playerMove.length()-1));
@@ -87,15 +81,12 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 newMove[1] = col;
 
                 if (TURN == "RED"){
-                    System.out.println("what row did we press!?  " + row);
-                    System.out.println("what col did we press!?  " + col);
                     if (checkLegalMove(newMove,historical,TURN)){
                         checkWin(gameState,drawBoard, historical);
                         draw(gameState);
                         TURN = "GREEN";
                         checkTurnColor();
                     }
-                    System.out.println(Arrays.deepToString(gameState));
                 } else if (TURN == "GREEN"){
                     if (checkLegalMove(newMove,historical,TURN)){
                         checkWin(gameState,drawBoard, historical);
@@ -103,7 +94,6 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                         TURN = "RED";
                         checkTurnColor();
                     }
-                    System.out.println("WHOSE TURN: " + TURN);
                 }
 
             }
@@ -115,7 +105,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             }
         }
     }
-
+    // draw the board based on gameState
     public void draw(String[][] gameState){
         for (int j=0; j<gameState.length; j++){
             for(int k=0; k<gameState[j].length; k++){
@@ -145,9 +135,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
-
+    //retract move one by one till the board is empty, no retracts allowed after game ends or draws
     public void retractMove(String[][] gameState, ArrayList<int[]> historical){
-        //retract move
         int[] move = historical.remove(historical.size() - 1);
         gameState[move[0]][move[1]] = null;
         copyGameState[move[0]][move[1]] = null;
@@ -217,7 +206,6 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             int row = move[0];
             int col = move[1];
             String lastColor = copyGameState[row][col];
-            System.out.println("CHECKING FOR WIN : " + lastColor);
             if (historical.size() == 42){
                 gameStatus = "DRAW";
             }
@@ -232,9 +220,6 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
             }
             //horizontal xoxx
-            System.out.println("lastColor = " +lastColor);
-            System.out.println(Arrays.deepToString(gameState));
-            System.out.println("copy: " + Arrays.deepToString(copyGameState));
             if (col>0 && col<5 && copyGameState[row][col+1]== lastColor &&
                     copyGameState[row][col+2] == lastColor && copyGameState[row][col-1] == lastColor){
                 gameState[row][col] = "w";
@@ -245,9 +230,6 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
             }
             //horizontal xxox
-            System.out.println("lastColor = " +lastColor);
-            System.out.println(Arrays.deepToString(gameState));
-            System.out.println("copy: " + Arrays.deepToString(copyGameState));
             if (col<6 && col>1 && copyGameState[row][col-1]== lastColor &&
                     copyGameState[row][col-2] == lastColor && copyGameState[row][col+1] == lastColor){
                 gameState[row][col] = "w";
@@ -257,9 +239,6 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 gameStatus = "END";
             }
             // horizontal oxxx
-            System.out.println("lastColor = " +lastColor);
-            System.out.println(Arrays.deepToString(gameState));
-            System.out.println("copy: " + Arrays.deepToString(copyGameState));
             if (col<4 && copyGameState[row][col+1]== lastColor &&
                     copyGameState[row][col+2] == lastColor && copyGameState[row][col+3] == lastColor){
                 gameState[row][col] = "w";
@@ -269,9 +248,6 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 gameStatus = "END";
             }
             // horizontal xxxo
-            System.out.println("lastColor = " +lastColor);
-            System.out.println(Arrays.deepToString(gameState));
-            System.out.println("copy: " + Arrays.deepToString(copyGameState));
             if (col>2 && copyGameState[row][col-1]== lastColor &&
                     copyGameState[row][col-2] == lastColor && copyGameState[row][col-3] == lastColor){
                 gameState[row][col] = "w";
@@ -371,8 +347,6 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 gameState[row+3][col-3] = "w";
                 gameStatus = "END";
             }
-
-
         }
         return gameStatus;
     }

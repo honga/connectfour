@@ -23,10 +23,6 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v){
         if (v.getId() == R.id.start_button){
-            // do sth
-            System.out.println("################\n" +
-                                "Hey Ho let's go!\n" +
-                                "################");
 
             Intent intent = new Intent(getBaseContext(), GameActivity.class);
             startActivity(intent);
